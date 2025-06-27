@@ -67,7 +67,7 @@ app.get("/orders/:id/invoice", async (req, res) => {
     const { id: orderId } = req.params;
     const order = await getOrder(orderId);
 
-    // Optional customer-email verification – append ?email={{ customer.email }} in the link
+    // Optional customer‑email verification – append ?email={{ customer.email }} in the link
     const requestedEmail = (req.query.email || "").toLowerCase();
     if (requestedEmail && requestedEmail !== order.email.toLowerCase()) {
       return res.status(403).send("Unauthorized access");
