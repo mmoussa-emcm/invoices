@@ -13,7 +13,7 @@ const PORT = 80;
 const SHOPIFY_STORE_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN;
 const SHOPIFY_API_VERSION = process.env.SHOPIFY_API_VERSION;
 const SHOPIFY_ACCESS_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN;
-const ADTOKEN = process.env.ADTOKEN; // set a secret token for admin panel access
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN; // set a secret token for admin panel access
 
 // --- CONFIG ---
 const CONFIG_PATH = path.join(__dirname, "config.json");
@@ -37,7 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 // Admin authentication (simple token-based)
 app.use("/admin", (req, res, next) => {
   const token = req.headers["x-admin-token"] || req.query.token;
-  if (token !== ADTOKEN) {
+  if (token !== ADMIN_TOKEN) {
     return res.status(401).send("Unauthorized");
   }
   next();
@@ -98,7 +98,7 @@ app.get("/admin/config", (req, res) => {
       <head><title>Invoice Settings</title></head>
       <body>
         <h2>Invoice Settings</h2>
-        <form method="POST" action="/admin/config?token=${ADTOKEN}">
+        <form method="POST" action="/admin/config?token=${ADMIN_TOKEN}">
           <label>
             <input type="checkbox" name="allowInvoiceDownload" value="true" ${
               config.allowInvoiceDownload ? "checked" : ""
@@ -117,7 +117,9 @@ app.post("/admin/config", (req, res) => {
   config.allowInvoiceDownload = req.body.allowInvoiceDownload === "true";
   saveConfig();
   res.send(
-    'Settings updated. <a href="/admin/config?token=' + ADTOKEN + '">Back</a>'
+    'Settings updated. <a href="/admin/config?token=' +
+      ADMIN_TOKEN +
+      '">Back</a>'
   );
 });
 
@@ -140,14 +142,14 @@ app.get("/embedded", (req, res) => {
             });
             AppBridge.NavigationMenu.create(app, {
               items: [
-                { label: 'Invoice Settings', destination: '/admin/config?token=${ADTOKEN}' }
+                { label: 'Invoice Settings', destination: '/admin/config?token=${ADMIN_TOKEN}' }
               ],
             });
           });
         </script>
       </head>
       <body style="margin:0;padding:0;">
-        <iframe src="/admin/config?token=${ADTOKEN}" style="width:100%;height:100vh;border:none;"></iframe>
+        <iframe src="/admin/config?token=${ADMIN_TOKEN}" style="width:100%;height:100vh;border:none;"></iframe>
       </body>
     </html>
   `);
