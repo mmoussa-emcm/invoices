@@ -5,7 +5,7 @@ const express = require("express");
 const axios = require("axios");
 
 const app = express();
-const PORT = 3000;
+const PORT = 80;
 
 const SHOPIFY_STORE_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN;
 const SHOPIFY_API_VERSION = process.env.SHOPIFY_API_VERSION;
