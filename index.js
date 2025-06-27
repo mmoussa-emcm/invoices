@@ -46,6 +46,6 @@ app.get("/orders/:id/invoice", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Order Printer App running on http://localhost:${PORT}`);
 });
