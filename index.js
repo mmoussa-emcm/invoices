@@ -127,31 +127,7 @@ app.post("/admin/config", (req, res) => {
 app.get("/embedded", (req, res) => {
   const shop = req.query.shop || SHOPIFY_STORE_DOMAIN;
   res.send(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="utf-8" />
-        <title>Invoice Settings</title>
-        <script src="https://unpkg.com/@shopify/app-bridge@3"></script>
-        <script>
-          document.addEventListener('DOMContentLoaded', () => {
-            const AppBridge = window.appBridge.default;
-            const app = AppBridge.createApp({
-              apiKey: '${process.env.SHOPIFY_API_KEY || ""}',
-              shopOrigin: '${SHOPIFY_STORE_DOMAIN}',
-            });
-            AppBridge.NavigationMenu.create(app, {
-              items: [
-                { label: 'Invoice Settings', destination: '/admin/config?token=${ADMIN_TOKEN}' }
-              ],
-            });
-          });
-        </script>
-      </head>
-      <body style="margin:0;padding:0;">
-        <iframe src="/admin/config?token=${ADMIN_TOKEN}" style="width:100%;height:100vh;border:none;"></iframe>
-      </body>
-    </html>
+        <div class="">test</div>
   `);
 });
 
